@@ -6,6 +6,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write  # 赋予页面写入权限
+      id-token: write  # 赋予生成 ID 令牌的权限
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
