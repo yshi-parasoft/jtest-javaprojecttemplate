@@ -13,7 +13,7 @@ jobs:
     - name: Generate HTML reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
       with:
-        reports: reports/coverage.xml
+        reports: reports/cobertura.xml
         targetdir: coveragereport
 
     - name: Upload GitHub Pages artifact
