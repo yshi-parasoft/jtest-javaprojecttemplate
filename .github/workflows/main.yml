@@ -1,5 +1,7 @@
 name: Demo for report generator
 on:
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 jobs:
   build:
@@ -12,9 +14,8 @@ jobs:
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: reports/cobertura.xml
-        badge: false
+        badge: true
         format: markdown
-        indicators: true
         output: both
 
     - name: Add Coverage PR Comment
