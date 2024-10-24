@@ -8,9 +8,8 @@ jobs:
     # Step 1: 检出当前仓库的代码
     - name: Checkout repository
       uses: actions/checkout@v3
-            - name: ReportGenerator
-                - name: Code Coverage Summary
-
+                
+    - name: Code Coverage Summary
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         # A comma separated list of code coverage files to analyse. Also supports using glob patterns to match multiple files.
