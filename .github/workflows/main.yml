@@ -1,0 +1,10 @@
+name: Demo for report generator
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # Step 1: 检出当前仓库的代码
+    - name: Checkout repository
+      uses: actions/checkout@v3
