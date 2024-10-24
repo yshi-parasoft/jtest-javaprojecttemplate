@@ -37,15 +37,18 @@ jobs:
       - name: Add unique path using GitHub Run ID
         run: |
           UNIQUE_PATH="coverage-report-${{ github.run_id }}"
-          mv ./coverage-report ./$UNIQUE_PATH
-          echo "UNIQUE_PATH=$UNIQUE_PATH" >> $GITHUB_ENV  # 将路径存储为环境变量
+          mkdir -p ./$UNIQUE_PATH  # 创建目录
+          mv ./coverage-report/* ./$UNIQUE_PATH/  # 移动生成的HTML报告
+          echo "UNIQUE_PATH=$UNIQUE_PATH" >> $GITHUB_ENV  # 存储路径为环境变量
         shell: bash
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.UNIQUE_PATH }}  # 使用环境变量中的路径
+          path: ${{ env.UNIQUE_PATH }}
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          path: ${{ env.UNIQUE_PATH }}  # 上传到 Pages 中的指定子目录
