@@ -8,6 +8,11 @@ public class Calculator implements ICalculator {
         screen.showResult(result);
         return result;
     }
+    public int remove(int a, int b) {
+        int result = a - b;
+        screen.showResult(result);
+        return result;
+    }
 
     public static class Screen {
         private Brightness brightness;
