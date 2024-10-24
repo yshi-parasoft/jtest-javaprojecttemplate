@@ -37,9 +37,9 @@ jobs:
       - name: Add unique path using GitHub Run ID
         run: |
           UNIQUE_PATH="coverage-report-${{ github.run_id }}"
-          mkdir -p ./$UNIQUE_PATH  # 创建目录
+          mkdir -p ./$UNIQUE_PATH  # 创建唯一的路径目录
           mv ./coverage-report/* ./$UNIQUE_PATH/  # 移动生成的HTML报告
-          echo "UNIQUE_PATH=$UNIQUE_PATH" >> $GITHUB_ENV  # 存储路径为环境变量
+          echo "UNIQUE_PATH=$UNIQUE_PATH" >> $GITHUB_ENV  # 存储为环境变量
         shell: bash
 
       - name: Generate or Update index.html
@@ -51,16 +51,17 @@ jobs:
           echo "<li><a href='./${{ env.UNIQUE_PATH }}/index.html'>Report ${{ github.run_id }}</a></li>" >> $INDEX_FILE
           echo "</ul></body></html>" >> $INDEX_FILE
           
-      - name: Upload index.html
-        run: |
-          mkdir -p ./index
-          mv index.html ./index/index.html  # 确保 index.html 被部署到根路径
-          
+      - name: Ensure index directory exists
+        run: mkdir -p ./index
+
+      - name: Move index.html to index directory
+        run: mv index.html ./index/index.html  # 确保 index.html 被部署到根路径
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: |
-            ${{ env.UNIQUE_PATH }}
+            ${{ env.UNIQUE_PATH }}  # 上传生成的报告路径
             ./index/index.html  # 上传首页
 
       - name: Deploy to GitHub Pages
@@ -68,5 +69,5 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           path: |
-            ${{ env.UNIQUE_PATH }}
+            ${{ env.UNIQUE_PATH }}  # 部署报告
             ./index/index.html  # 同时部署更新后的首页
