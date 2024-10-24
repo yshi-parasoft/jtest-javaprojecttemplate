@@ -42,13 +42,31 @@ jobs:
           echo "UNIQUE_PATH=$UNIQUE_PATH" >> $GITHUB_ENV  # 存储路径为环境变量
         shell: bash
 
+      - name: Generate or Update index.html
+        run: |
+          INDEX_FILE="index.html"
+          if [ ! -f $INDEX_FILE ]; then
+            echo "<html><body><h1>Coverage Reports</h1><ul>" > $INDEX_FILE
+          fi
+          echo "<li><a href='./${{ env.UNIQUE_PATH }}/index.html'>Report ${{ github.run_id }}</a></li>" >> $INDEX_FILE
+          echo "</ul></body></html>" >> $INDEX_FILE
+          
+      - name: Upload index.html
+        run: |
+          mkdir -p ./index
+          mv index.html ./index/index.html  # 确保 index.html 被部署到根路径
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.UNIQUE_PATH }}
+          path: |
+            ${{ env.UNIQUE_PATH }}
+            ./index/index.html  # 上传首页
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          path: ${{ env.UNIQUE_PATH }}  # 上传到 Pages 中的指定子目录
+          path: |
+            ${{ env.UNIQUE_PATH }}
+            ./index/index.html  # 同时部署更新后的首页
