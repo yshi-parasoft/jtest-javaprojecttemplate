@@ -1,4 +1,4 @@
-name: Deploy static content to Pages
+name: Deploy coverage report to GitHub Pages
 
 on:
   pull_request:
@@ -36,34 +36,20 @@ jobs:
 
       - name: Add unique path using GitHub Run ID
         run: |
-          UNIQUE_PATH="coverage-report-${{ github.run_id }}"
-          mkdir -p ./$UNIQUE_PATH  # 创建唯一的路径目录
+          UNIQUE_PATH="coverage-report-${{ github.run_id }}"  # 使用 GitHub Run ID 生成唯一路径
+          mkdir -p ./$UNIQUE_PATH  # 创建路径目录
           mv ./coverage-report/* ./$UNIQUE_PATH/  # 移动生成的HTML报告
           echo "UNIQUE_PATH=$UNIQUE_PATH" >> $GITHUB_ENV  # 存储为环境变量
         shell: bash
 
-      # - name: Generate or Update index.html
-      #   run: |
-      #     INDEX_FILE="index.html"
-      #     if [ ! -f $INDEX_FILE ]; then
-      #       echo "<html><body><h1>Coverage Reports</h1><ul>" > $INDEX_FILE
-      #     fi
-      #     echo "<li><a href='./${{ env.UNIQUE_PATH }}/index.html'>Report ${{ github.run_id }}</a></li>" >> $INDEX_FILE
-      #     echo "</ul></body></html>" >> $INDEX_FILE
-          
-      # - name: Ensure index directory exists
-      #   run: mkdir -p ./index
-
-      # - name: Move index.html to index directory
-      #   run: mv index.html ./index/index.html  # 确保 index.html 被部署到根路径
-
-      - name: Upload artifact
+      - name: Upload artifact and deploy to unique path
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.UNIQUE_PATH }}
+          path: ./${{ env.UNIQUE_PATH }}
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages with unique path
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          path: ${{ env.UNIQUE_PATH }}
+          path: ./${{ env.UNIQUE_PATH }}
+          target-path: "/${{ github.run_id }}"  # 使用 GitHub Run ID 作为目标路径
