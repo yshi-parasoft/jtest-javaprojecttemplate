@@ -61,13 +61,13 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: |
-            ${{ env.UNIQUE_PATH }}  # 上传生成的报告路径
-            ./index/index.html  # 上传首页
+            ${{ env.UNIQUE_PATH }}
+            ./index/index.html
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
           path: |
-            ${{ env.UNIQUE_PATH }}  # 部署报告
-            ./index/index.html  # 同时部署更新后的首页
+            ${{ env.UNIQUE_PATH }}
+            ./index/index.html
