@@ -60,14 +60,10 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            ${{ env.UNIQUE_PATH }}
-            # ./index
+          path: ${{ env.UNIQUE_PATH }}
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          path: |
-            ${{ env.UNIQUE_PATH }}
-            # ./index
+          path: ${{ env.UNIQUE_PATH }}
