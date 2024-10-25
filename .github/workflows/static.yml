@@ -42,27 +42,27 @@ jobs:
           echo "UNIQUE_PATH=$UNIQUE_PATH" >> $GITHUB_ENV  # 存储为环境变量
         shell: bash
 
-      - name: Generate or Update index.html
-        run: |
-          INDEX_FILE="index.html"
-          if [ ! -f $INDEX_FILE ]; then
-            echo "<html><body><h1>Coverage Reports</h1><ul>" > $INDEX_FILE
-          fi
-          echo "<li><a href='./${{ env.UNIQUE_PATH }}/index.html'>Report ${{ github.run_id }}</a></li>" >> $INDEX_FILE
-          echo "</ul></body></html>" >> $INDEX_FILE
+      # - name: Generate or Update index.html
+      #   run: |
+      #     INDEX_FILE="index.html"
+      #     if [ ! -f $INDEX_FILE ]; then
+      #       echo "<html><body><h1>Coverage Reports</h1><ul>" > $INDEX_FILE
+      #     fi
+      #     echo "<li><a href='./${{ env.UNIQUE_PATH }}/index.html'>Report ${{ github.run_id }}</a></li>" >> $INDEX_FILE
+      #     echo "</ul></body></html>" >> $INDEX_FILE
           
-      - name: Ensure index directory exists
-        run: mkdir -p ./index
+      # - name: Ensure index directory exists
+      #   run: mkdir -p ./index
 
-      - name: Move index.html to index directory
-        run: mv index.html ./index/index.html  # 确保 index.html 被部署到根路径
+      # - name: Move index.html to index directory
+      #   run: mv index.html ./index/index.html  # 确保 index.html 被部署到根路径
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: |
             ${{ env.UNIQUE_PATH }}
-            ./index
+            # ./index
 
       - name: Deploy to GitHub Pages
         id: deployment
@@ -70,4 +70,4 @@ jobs:
         with:
           path: |
             ${{ env.UNIQUE_PATH }}
-            ./index
+            # ./index
