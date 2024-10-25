@@ -60,9 +60,12 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            ${{ env.UNIQUE_PATH }}
-            ./index/index.html
+          path: ${{ env.UNIQUE_PATH }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./index/index.html
 
       - name: Deploy to GitHub Pages
         id: deployment
