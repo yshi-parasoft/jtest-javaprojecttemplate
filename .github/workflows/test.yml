@@ -1,26 +1,27 @@
-name: Display Markdown from File
+  # Sample workflow for building and deploying a Jekyll site to GitHub Pages
+  name: Test generate table
+  on:
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+  permissions:
+    checks: write
+    contents: write
 
-jobs:
-  display-markdown:
-    runs-on: ubuntu-latest
+  jobs:
+    # Build job
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+        - name: Generate table
+          uses: yshi-parasoft/report-action@main
 
-    - name: Read and Display Markdown File
-      run: |
-        # 读取并显示 markdown 文件内容
-        cat results.md
-
-    - name: Create a Markdown Annotation from File
-      run: |
-        # 读取 markdown 文件并创建一个注释
-        content=$(cat results.md)
-        echo "::notice title=Markdown Output::$content"
+        - name: Upload table file
+          uses: actions/upload-artifact@v4
+          with:
+            name: results.md # Artifact name        
+            path: ./results.md
