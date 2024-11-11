@@ -20,8 +20,8 @@
         - name: Generate table
           uses: yshi-parasoft/report-action@main
 
-        - name: Upload table file
-          uses: actions/upload-artifact@v4
-          with:
-            name: results.md # Artifact name        
-            path: ./results.md
+        # - name: Upload table file
+        #   uses: actions/upload-artifact@v4
+        #   with:
+        #     name: results.md # Artifact name        
+        #     path: ./results.md
