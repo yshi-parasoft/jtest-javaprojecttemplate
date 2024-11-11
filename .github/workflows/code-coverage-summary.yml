@@ -31,7 +31,7 @@
             # Include health indicators in the output - true (default) / false.
             # indicators: # optional, default is true
             # Output Type - console (default), file or both.
-            output: both # optional, default is console
+            output: file # optional, default is console
             # Threshold percentages for badge and health indicators, lower threshold can also be used to fail the action.
             # thresholds: # optional, default is 50 75
         - name: Add Coverage PR Comment
