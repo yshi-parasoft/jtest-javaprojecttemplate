@@ -34,3 +34,9 @@
             # output: # optional, default is console
             # Threshold percentages for badge and health indicators, lower threshold can also be used to fail the action.
             # thresholds: # optional, default is 50 75
+        - name: Add Coverage PR Comment
+          uses: marocchino/sticky-pull-request-comment@v2
+          if: github.event_name == 'pull_request'
+          with:
+            recreate: true
+            path: code-coverage-results.md
