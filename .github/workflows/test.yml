@@ -1,0 +1,25 @@
+name: Display Markdown from File
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  display-markdown:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Read and Display Markdown File
+      run: |
+        # 读取并显示 markdown 文件内容
+        cat results.md
+
+    - name: Create a Markdown Annotation from File
+      run: |
+        # 读取 markdown 文件并创建一个注释
+        content=$(cat results.md)
+        echo "::notice title=Markdown Output::$content"
